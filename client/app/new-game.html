@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="form-group">
+    <h2>Create New Game</h2>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Player X</span>
+      <select class="form-control" ng-model="form.xPlayer" ng-options="user.value as user.label for user in users"></select>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <small class="text-muted">vs.</small>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Player O</span>
+      <select class="form-control" ng-model="form.oPlayer" ng-options="user.value as user.label for user in users"></select>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary" ng-click="createGame()">Create Game</button>
+  </div>
+</div>

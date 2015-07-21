@@ -1,0 +1,35 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" ng-click="isTopExpanded = !isTopExpanded">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href>Tic-Tac-Teach</a>
+  </div>
+
+  <div class="collapse navbar-collapse" collapse="!isTopExpanded">
+    <ul class="nav navbar-nav">
+      <li><a href="#/newGame">New Game</a></li>
+      <li class="dropdown navbar-entry" dropdown="">
+        <a href class="dropdown-toggle" dropdown-toggle="">Resume Game <i class="caret"></i></a>
+        <ul class="dropdown-menu">
+          <li><a href>TODO: Game xyz</a></li>
+          <li><a href>TODO: Game xyz</a></li>
+          <li><a href>TODO: Game xyz</a></li>
+          <li><a href>TODO: Game xyz</a></li>
+        </ul>
+      </li>
+      <li><a href="#/theme">View Theme</a></li>
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li class="dropdown navbar-entry" dropdown="">
+        <a href class="dropdown-toggle" dropdown-toggle="">{{activeUser || 'Choose User'}} <i class="caret"></i></a>
+        <ul class="dropdown-menu pull-right">
+          <li><a href ng-click="activeUser='Moksh Patel'">Moksh Patel</a></li>
+          <li><a href ng-click="activeUser='Saarth Patel'">Saarth Patel</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
