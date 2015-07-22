@@ -1,10 +1,19 @@
 <div class="container">
   <div class="alert alert-info" ng-if="game == null">Loading <i class="fa fa-spinner fa-spin"></i></div>
   <div ng-if="game">
-    <h2>{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</h2>
+    <h2 class="text-center">{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</h2>
 
     <div class="form-group" ng-repeat="row in game.board">
-      <div class="col-md-4 tileh1" ng-repeat="col in row">{{col.word}}</div>
+      <div class="col-md-4" ng-repeat="col in row" style="padding: 5px;">
+        <div flippable="" flipped="col.flipped" class="col-md-12 card card-h1" style="background-color: lightgoldenrodyellow;">
+          <div flippable-front="" class="text-center" ng-click="col.flipped = !col.flipped">
+            <img src="http://www.drodd.com/images12/smiley-face-clip-art1.jpg" height="300px">
+          </div>
+          <div flippable-back="">
+            {{col.word}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
