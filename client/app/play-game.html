@@ -1,3 +1,10 @@
 <div class="container">
-  <h2>Playing game</h2>
+  <div class="alert alert-info" ng-if="game == null">Loading <i class="fa fa-spinner fa-spin"></i></div>
+  <div ng-if="game">
+    <h2>{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</h2>
+
+    <div class="form-group" ng-repeat="row in game.board">
+      <div class="col-md-4 tileh1" ng-repeat="col in row">{{col.word}}</div>
+    </div>
+  </div>
 </div>

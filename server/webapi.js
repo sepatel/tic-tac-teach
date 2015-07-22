@@ -13,6 +13,7 @@ module.exports = function(app) {
 
   // Create a new game {xPlayer: <profile._id>, oPlayer: <profile._id>, type: 'word|math|...', category: '<label>'}
   router.post('/game', function(req, res) {
+    console.info("New Game Request", req.body);
     var game = {
       players: {X: req.body.xPlayer, O: req.body.oPlayer},
       rules: { capture: 3, size: 3, type: req.body.type || 'word' },
@@ -37,6 +38,13 @@ module.exports = function(app) {
         console.info("Sending back", JSON.stringify(game));
         res.send(game);
       });
+    });
+  });
+
+  router.get('/games', function(req, res) {
+    mongodb.collection('game').find({winner: null}).toArray(function(error, docs) {
+      mongoError(res, error);
+      res.send(docs);
     });
   });
 

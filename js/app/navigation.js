@@ -7,5 +7,11 @@
     $routeProvider.when('/theme', {controller: 'ThemeCtrl', templateUrl: 'app/theme.html'});
     $routeProvider.otherwise({redirectTo: '/'});
   });
+
+  module.controller('NavigationCtrl', function($scope, TTTService) {
+    TTTService.getAllGames().then(function(games) {
+      $scope.games = games;
+    });
+  });
 }(angular));
 

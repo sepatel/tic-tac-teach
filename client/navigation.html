@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavigationCtrl">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle collapsed" ng-click="isTopExpanded = !isTopExpanded">
       <span class="icon-bar"></span>
@@ -14,10 +14,9 @@
       <li class="dropdown navbar-entry" dropdown="">
         <a href class="dropdown-toggle" dropdown-toggle="">Resume Game <i class="caret"></i></a>
         <ul class="dropdown-menu">
-          <li><a href>TODO: Game xyz</a></li>
-          <li><a href>TODO: Game xyz</a></li>
-          <li><a href>TODO: Game xyz</a></li>
-          <li><a href>TODO: Game xyz</a></li>
+          <li ng-repeat="game in games">
+            <a href="#/game/{{game._id}}">{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</a>
+          </li>
         </ul>
       </li>
       <li><a href="#/theme">View Theme</a></li>

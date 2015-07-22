@@ -18,10 +18,6 @@
       return $http.get(url).then(successHandler, errorHandler);
     }
 
-    function $patch(url, data) {
-      return $http.patch(url, data).then(successHandler, errorHandler);
-    }
-
     function $post(url, data) {
       return $http.post(url, data).then(successHandler, errorHandler);
     }
@@ -30,15 +26,42 @@
       return $http.put(url, data).then(successHandler, errorHandler);
     }
 
-    return {
+    var gamesList;
+    var me = {
+      getAllGames: function() {
+        if (gamesList) {
+          return $q.resolve(gamesList);
+        }
+
+        return $get('/api/games').then(function(games) {
+          gamesList = games;
+          return gamesList;
+        });
+      },
+      getGame: function(gameId) {
+        var defer = $q.defer();
+        me.getAllGames().then(function(games) {
+          angular.forEach(games, function(game) {
+            if (game._id == gameId) {
+              defer.resolve(game);
+            }
+          });
+        });
+        return defer.promise;
+        //return $get('/api/game/' + gameId);
+      },
       newGame: function(options) {
+        console.info("Creating new game with ", options);
         // TODO: Determine the players to play in the new game plus other options (rules, category, type, size, ...)
-        return $post('/api/game').then(function(game) {
+        return $post('/api/game', options).then(function(game) {
           NotifyService.success("New Game", "New game has been started, have fun");
+          gamesList.push(game);
           return game;
         });
       }
-    }
+    };
+
+    return me;
   });
 }(angular));
 

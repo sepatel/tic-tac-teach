@@ -3,7 +3,7 @@
 
   module.controller('NewGameCtrl', function($scope, $location, TTTService) {
     $scope.form = {
-      xPlayer: 'mopatel', // TODO: Replace with activeUser from the navigation
+      xPlayer: 'Moksh Patel', // TODO: Replace with activeUser from the navigation
       oPlayer: null,
       type: 'word',
       category: null
@@ -11,10 +11,10 @@
 
     $scope.users = [
       {label: 'Computer', value: null},
-      {label: 'Moksh Patel', value: 'mopatel'},
-      {label: 'Saarth Patel', value: 'sapatel'},
-      {label: 'Mital Patel', value: 'mipatel'},
-      {label: 'Sejal Patel', value: 'sepatel'}
+      {label: 'Moksh Patel', value: 'Moksh Patel'},
+      {label: 'Saarth Patel', value: 'Saarth Patel'},
+      {label: 'Mital Patel', value: 'Mital Patel'},
+      {label: 'Sejal Patel', value: 'Sejal Patel'}
     ];
 
     $scope.createGame = function() {
@@ -23,5 +23,11 @@
         $location.path("/game/" + game._id);
       });
     };
+  });
+
+  module.controller('PlayGameCtrl', function($scope, $routeParams, TTTService) {
+    TTTService.getGame($routeParams.gameId).then(function(game) {
+      $scope.game = game;
+    });
   });
 }(angular));
