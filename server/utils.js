@@ -1,7 +1,7 @@
 var Database = require('./database');
 
 Database.then(function(db) {
-  console.info("Util DB is ready ", db.s.databaseName);
+  console.info("Util DB %s is ready ", db.s.databaseName);
 });
 
 module.exports = {

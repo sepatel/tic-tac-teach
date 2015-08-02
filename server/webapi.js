@@ -4,24 +4,24 @@ var Database = require('./database');
 
 var mongodb;
 Database.then(function(db) {
-  console.info("Webapi DB is ready ", db.s.databaseName);
+  console.info("Webapi DB %s is ready ", db.s.databaseName);
   mongodb = db;
 });
 
-module.exports = function(app) {
-  var router = app.Router();
-
-  // Create a new game {xPlayer: <profile._id>, oPlayer: <profile._id>, type: 'word|math|...', category: '<label>'}
-  router.post('/game', function(req, res) {
-    console.info("New Game Request", req.body);
+module.exports = {
+  newGame: function(data) {
+    var defer = Q.defer();
+    console.info("New Game Request", data);
     var game = {
-      players: {X: req.body.xPlayer, O: req.body.oPlayer},
-      rules: { capture: 3, size: 3, type: req.body.type || 'word' },
+      players: {X: data.xPlayer, O: data.oPlayer},
+      rules: { capture: 3, size: 3, type: data.type || 'word' },
       board: []
     };
 
-    mongodb.collection('word').find({labels: req.body.category}).toArray(function(err, docs) {
-      mongoError(res, err);
+    mongodb.collection('word').find({labels: data.category}).toArray(function(err, docs) {
+      if (err) {
+        return defer.reject(err);
+      }
 
       for (var row = 0; row < game.rules.size; row++) {
         var boardRow = [];
@@ -34,65 +34,24 @@ module.exports = function(app) {
       }
 
       mongodb.collection('game').insert(game, function(error, document) {
-        mongoError(res, error);
-        console.info("Sending back", JSON.stringify(game));
-        res.send(game);
+        if (error) {
+          return defer.reject(error);
+        }
+        console.info("Creating New Game", JSON.stringify(game));
+        return defer.resolve(game);
       });
     });
-  });
-
-  router.get('/games', function(req, res) {
+    return defer.promise;
+  },
+  getAllGames: function() {
+    var defer = Q.defer();
     mongodb.collection('game').find({winner: null}).toArray(function(error, docs) {
-      mongoError(res, error);
-      res.send(docs);
+      if (error) {
+        return defer.reject(error);
+      }
+      return defer.resolve(docs);
     });
-  });
-
-  /*
-   router.get('/game/:gameId', function(req, res) {
-   DataFetcher.getGame(req.params.gameId).then(function(game) {
-   console.info("Game to send back is ", game);
-   res.status(200);
-   res.send(game);
-   }).catch(function(error) {
-   console.info("Error is ", error);
-   res.status(500);
-   res.send({error: error});
-   });
-   });
-
-   router.delete('/build/:id', function(req, res) {
-   DataFetcher.build.remove(req.params.id).then(function(guide) {
-   res.status(200);
-   res.send(guide);
-   }).catch(function(error) {
-   console.info("Error is ", error);
-   res.status(500);
-   res.send({error: error});
-   });
-   });
-
-
-   router.post('/build', function(req, res) {
-   console.info("Save Guide", req.body);
-   DataFetcher.build.save(req.body).then(function(guide) {
-   res.status(200);
-   res.send(guide);
-   }).catch(function(error) {
-   console.info("Error is ", error);
-   res.status(500);
-   res.send({error: error});
-   });
-   });
-   */
-
-  return router;
+    return defer.promise;
+  }
 };
 
-function mongoError(response, error) {
-  if (error) {
-    response.status(500);
-    response.send({error: error});
-    throw error;
-  }
-}

@@ -1,16 +1,29 @@
 <div class="container">
   <div class="alert alert-info" ng-if="game == null">Loading <i class="fa fa-spinner fa-spin"></i></div>
   <div ng-if="game">
-    <h2 class="text-center">{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</h2>
+    <h2 class="text-center">
+      <span ng-class="{'text-success': xTurn}">X: {{game.players.X || 'Computer'}}</span>
+      vs
+      <span ng-class="{'text-success': !xTurn}">O: {{game.players.O || 'Computer'}}</span>
+    </h2>
 
     <div class="form-group" ng-repeat="row in game.board">
       <div class="col-md-4" ng-repeat="col in row" style="padding: 5px;">
         <div flippable="" flipped="col.flipped" class="col-md-12 card card-h1" style="background-color: lightgoldenrodyellow;">
-          <div flippable-front="" class="text-center" ng-click="col.flipped = !col.flipped">
-            <img src="http://www.drodd.com/images12/smiley-face-clip-art1.jpg" height="300px">
+          <div flippable-front="" class="text-center">
+            <div ng-if="col.owner != null" class="text-center" style="font-size: 15em;">
+              {{col.owner}}
+            </div>
+            <div ng-if="col.owner == null" ng-click="flipCard(col)" style="width: 100%; height: 100%; background-color: green;">
+              <img src="http://www.drodd.com/images12/smiley-face-clip-art1.jpg" height="300px">
+            </div>
           </div>
           <div flippable-back="">
-            {{col.word}}
+            <div class="text-center fa-5x">{{col.word}}</div>
+            <div>
+              <button class="btn btn-default pull-right" ng-click="incorrect(col)">Incorrect</button>
+              <button class="btn btn-default" ng-click="correct(col)">Correct</button>
+            </div>
           </div>
         </div>
       </div>

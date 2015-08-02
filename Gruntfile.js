@@ -28,6 +28,15 @@ module.exports = function(grunt) {
       app: {
         src: [ 'js/app/**/*.js' ],
         dest: 'client/js/app.js'
+      },
+      vendor: {
+        src: [
+          'bower_components/jquery/dist/jquery.js', 'bower_components/angular/angular.js',
+          'bower_components/angular-animate/angular-animate.js', 'bower_components/angular-route/angular-route.js',
+          'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js',
+          'bower_components/ng-websocket/ng-websocket.js', 'bower_components/annyang/annyang.js'
+        ],
+        dest: 'client/js/vendor.js'
       }
     },
 
@@ -39,7 +48,8 @@ module.exports = function(grunt) {
         src: [
           'bower_components/jquery/dist/jquery.js', 'bower_components/angular/angular.js',
           'bower_components/angular-animate/angular-animate.js', 'bower_components/angular-route/angular-route.js',
-          'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js'
+          'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js',
+          'bower_components/ng-websocket/ng-websocket.js', 'bower_components/annyang/annyang.js'
         ],
         dest: 'client/js/vendor.min.js'
       }
@@ -49,7 +59,7 @@ module.exports = function(grunt) {
         options: {
           strictMath: true
         },
-        src: ['less/bootstrap.less', 'less/addons/sliqsolv.less'],
+        src: ['less/bootstrap.less', 'less/addons/sliqsolv.less', 'less/app/app.less'],
         dest: 'client/css/<%= pkg.name %>.css'
       }
     },

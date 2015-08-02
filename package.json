@@ -3,7 +3,17 @@
   "description": "Teaching tool to help make learning more fun via tic-tac-toe",
   "version": "0.0.1",
   "keywords": [
-    "education", "spelling", "math", "css", "less", "mobile-first", "responsive", "front-end", "framework", "web", "ui",
+    "education",
+    "spelling",
+    "math",
+    "css",
+    "less",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web",
+    "ui",
     "sliqsolv"
   ],
   "homepage": "http:github.com/sepatel/tic-tac",
@@ -18,7 +28,9 @@
     "mongodb": "~2.0.15",
     "q": "~1.2.0",
     "underscore": "~1.8.2",
-    "async": "~1.0.0"
+    "async": "~1.0.0",
+    "socket.io": "~1.3.6",
+    "ws": "~0.7.2"
   },
   "devDependencies": {
     "btoa": "~1.1.2",
