@@ -84,13 +84,13 @@
     });
     ws.$on('$message', function(data, flags) {
       console.info("Data", data, "Flags", flags);
-      NotifyService.info('Message', "Data: " + JSON.stringify(data) + "\nFlags: " + flags);
+      //NotifyService.info('Message', "Data: " + JSON.stringify(data) + "\nFlags: " + flags);
     });
     ws.$on('$open', function() {
-      NotifyService.info('Server Connection', "The server connection has opened.");
+      NotifyService.info('Server Connection', "The server connection has opened.", 2);
     });
     ws.$on('$close', function() {
-      NotifyService.info('Server Error', "The server connection has closed. Auto retrying.");
+      NotifyService.info('Server Error', "The server connection has closed. Auto retrying.", 2);
     });
     var me = {
       sendMessage: function(event, data) {
