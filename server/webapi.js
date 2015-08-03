@@ -13,6 +13,7 @@ module.exports = {
     var defer = Q.defer();
     console.info("New Game Request", data);
     var game = {
+      _id: Utils.uuid(),
       players: {X: data.xPlayer, O: data.oPlayer},
       rules: { capture: 3, size: 3, type: data.type || 'word' },
       board: []
@@ -33,6 +34,8 @@ module.exports = {
         game.board.push(boardRow);
       }
 
+      return defer.resolve(game);
+      /*
       mongodb.collection('game').insert(game, function(error, document) {
         if (error) {
           return defer.reject(error);
@@ -40,6 +43,7 @@ module.exports = {
         console.info("Creating New Game", JSON.stringify(game));
         return defer.resolve(game);
       });
+      */
     });
     return defer.promise;
   },

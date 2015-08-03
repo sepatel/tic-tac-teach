@@ -10,13 +10,15 @@ var defer = Q.nfcall(MongoClient.connect, Config.mongo).then(function(mongodb) {
 }).then(function(mongodb) {
   // Initialize the dictionary
   var collection = mongodb.collection('word');
-  _.forEach(Config.initWords, function(word) {
-    collection.update({_id: word}, {_id: word}, {upsert: true}, function(error, response) {
-      if (error) {
-        console.error("Unable to add word", word, error);
-      } else if (response.result.upserted) {
-        console.info("Injected word", word);
-      }
+  _.forEach(Config.initWords, function(words, key) {
+    _.forEach(words, function(word) {
+      collection.update({_id: word}, {_id: word, labels: [key]}, {upsert: true}, function(error, response) {
+        if (error) {
+          console.error("Unable to add word", word, error);
+        } else if (response.result.upserted) {
+          console.info("Injected word", word);
+        }
+      });
     });
   });
   console.log("Initialized words list");

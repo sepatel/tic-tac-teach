@@ -1,10 +1,14 @@
 var Database = require('./database');
+var ObjectID = require('mongodb').ObjectID;
 
 Database.then(function(db) {
   console.info("Util DB %s is ready ", db.s.databaseName);
 });
 
 module.exports = {
+  uuid: function() {
+    return new ObjectID();
+  },
   randomInt: function(min, max) {
     if (max === undefined) {
       max = min;

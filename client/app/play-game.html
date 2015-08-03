@@ -19,10 +19,10 @@
             </div>
           </div>
           <div flippable-back="">
-            <div class="text-center fa-5x">{{col.word}}</div>
-            <div>
-              <button class="btn btn-default pull-right" ng-click="incorrect(col)">Incorrect</button>
+            <div class="text-center" style="font-size: 11em; padding-top: 25px;">{{col.word}}</div>
+            <div style="bottom: 6px; position: absolute; width: 100%;">
               <button class="btn btn-default" ng-click="correct(col)">Correct</button>
+              <button class="btn btn-default pull-right" ng-click="steal(col)">Steal</button>
             </div>
           </div>
         </div>

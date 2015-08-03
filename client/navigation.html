@@ -10,7 +10,15 @@
 
   <div class="collapse navbar-collapse" collapse="!isTopExpanded">
     <ul class="nav navbar-nav">
-      <li><a href="#/newGame">New Game</a></li>
+      <!-- li><a href="#/newGame">New Game</a></li -->
+      <li class="dropdown navbar-entry" dropdown="">
+        <a href class="dropdown-toggle" dropdown-toggle="">New Game <i class="caret"></i></a>
+        <ul class="dropdown-menu">
+          <li><a href ng-click="createGame('letter')">Letters</a></li>
+          <li><a href ng-click="createGame('cvc')">Level 1</a></li>
+          <li><a href ng-click="createGame('dolch1')">Level 2</a></li>
+        </ul>
+      </li>
       <li class="dropdown navbar-entry" dropdown="">
         <a href class="dropdown-toggle" dropdown-toggle="">Resume Game <i class="caret"></i></a>
         <ul class="dropdown-menu">

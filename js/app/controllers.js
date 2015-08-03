@@ -68,7 +68,8 @@
       }
     };
 
-    $scope.incorrect = function(tile) {
+    $scope.steal = function(tile) {
+      tile.owner = ($scope.xTurn) ? 'O' : 'X';
       endTurn(tile);
     };
 
