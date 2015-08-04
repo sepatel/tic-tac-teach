@@ -48,7 +48,7 @@
 
         tile.timer = $timeout(function() {
           delete tile.timer;
-          $scope.incorrect(tile);
+          endTurn(tile);
         }, 10000);
         /*
          var stopTimer = $timeout(function() {
