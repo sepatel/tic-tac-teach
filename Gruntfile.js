@@ -119,7 +119,7 @@ module.exports = function(grunt) {
       /* html: { files: 'client/** /*.html', tasks: 'copy:html' }, */
       less: {
         files: 'less/**/*.less',
-        tasks: 'less'
+        tasks: 'dist-css'
       }
     },
 

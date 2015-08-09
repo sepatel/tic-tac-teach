@@ -8,21 +8,27 @@
     </h2>
 
     <div class="form-group" ng-repeat="row in game.board">
-      <div class="col-md-4" ng-repeat="col in row" style="padding: 5px;">
-        <div flippable="" flipped="col.flipped" class="col-md-12 card card-h1 bg-warning">
+      <div class="col-md-4 cell" ng-repeat="col in row">
+        <div flippable="" flipped="col.flipped" class="col-md-12 card card-h1">
           <div flippable-front="" class="text-center" ng-class="{'bg-success': col.owner}">
             <div ng-if="col.owner != null" class="text-center" style="font-size: 15em;">
               {{col.owner}}
             </div>
             <div ng-if="col.owner == null" ng-click="flipCard(col)" style="width: 100%; height: 100%;">
-              <img src="/images/face.png" height="300px">
+              <img src="/images/face.png" height="100%">
             </div>
           </div>
-          <div flippable-back="">
+          <div flippable-back="" ng-class="tileType">
+            <div class="float-top">
+              <span ng-if="xTurn">X: {{game.players.X || 'Computer'}}'s Turn</span>
+              <span ng-if="!xTurn">O: {{game.players.O || 'Computer'}}'s Turn</span>
+            </div>
             <div class="text-center" style="font-size: 11em; padding-top: 25px;">{{col.word}}</div>
-            <div style="bottom: 6px; position: absolute; width: 100%;">
+            <div class="float-bottom-left">
               <button class="btn btn-default" ng-click="correct(col)">Correct</button>
-              <button class="btn btn-default pull-right" ng-click="steal(col)">Steal</button>
+            </div>
+            <div class="float-bottom-right">
+              <button class="btn btn-default" ng-click="steal(col)">Steal</button>
             </div>
           </div>
         </div>

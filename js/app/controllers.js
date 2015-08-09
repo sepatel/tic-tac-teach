@@ -34,6 +34,8 @@
     $scope.xTurn = true;
 
     $scope.flipCard = function(tile) {
+      $scope.tileType = "tile" + Math.floor(Math.random() * 5);
+
       var flippable = true;
       angular.forEach($scope.game.board, function(row) {
         angular.forEach(row, function(col) {
@@ -82,6 +84,7 @@
       $timeout.cancel(tile.timer);
       tile.flipped = false;
       $scope.xTurn = !$scope.xTurn;
+      delete $scope.tileType;
     }
   });
 }(angular));
