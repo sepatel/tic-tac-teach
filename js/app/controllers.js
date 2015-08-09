@@ -34,7 +34,11 @@
     $scope.xTurn = true;
 
     $scope.flipCard = function(tile) {
-      $scope.tileType = "tile" + Math.floor(Math.random() * 5);
+      $scope.ui = {
+        type: "tileType" + Math.floor(Math.random() * 5),
+        size: "tileSize" + Math.floor(Math.random() * 5),
+        style: "tileStyle" + Math.floor(Math.random() * 5)
+      };
 
       var flippable = true;
       angular.forEach($scope.game.board, function(row) {

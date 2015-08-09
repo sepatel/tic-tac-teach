@@ -9,28 +9,73 @@
     background-color: @gray-lighter;
     border: 2px solid darken(spin(@gray-lighter, -10), 15%);
     padding: @padding-base-vertical @padding-base-horizontal;
+
+    &.owned {
+      &.X {
+        .tileSet(darken(@brand-success, 10%));
+      }
+      &.O {
+        .tileSet(lighten(@brand-success, 10%));
+      }
+    }
   }
 
-  .tile0 {
+  .tileType0 {
     .tileSet(@brand-secondary);
   }
-  .tile1 {
+  .tileType1 {
     .tileSet(@brand-info);
   }
-  .tile2 {
+  .tileType2 {
     .tileSet(@brand-primary);
   }
-  .tile3 {
+  .tileType3 {
     .tileSet(@brand-warning);
   }
-  .tile4 {
+  .tileType4 {
     .tileSet(@brand-danger);
+  }
+
+  .tileSize0 {
+    .tileSize(0);
+  }
+  .tileSize1 {
+    .tileSize(1);
+  }
+  .tileSize2 {
+    .tileSize(2);
+  }
+  .tileSize3 {
+    .tileSize(3);
+  }
+  .tileSize4 {
+    .tileSize(4);
+  }
+
+  .tileStyle0 {
+    font-family: 'Roboto', sans-serif;;
+  }
+  .tileStyle1 {
+    font-family: 'Indie Flower', cursive;
+  }
+  .tileStyle2 {
+    font-family: 'Chewy', cursive;
+  }
+  .tileStyle3 {
+    font-family: 'VT323', serif;
+  }
+  .tileStyle4 {
+    font-family: 'Rock Salt', cursive;
   }
 
   .tileSet(@color) {
     background-color: @color;
     border: 2px solid darken(spin(@color, -10), 15%);
     color: lighten(spin(@color, 10), 50%);
+  }
+  .tileSize(@size) {
+    font-size: (5em + @size);
+    padding-top: (35px - @size * 2);
   }
 }
 
