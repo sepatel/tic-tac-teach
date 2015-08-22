@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="alert alert-info" ng-if="game == null">Loading <i class="fa fa-spinner fa-spin"></i></div>
+  <div ng-if="game">
+    <!-- h2 class="text-center">
+      <span ng-class="{'text-danger': xTurn}">X: {{game.players.X || 'Computer'}}</span>
+      vs
+      <span ng-class="{'text-danger': !xTurn}">O: {{game.players.O || 'Computer'}}</span>
+    </h2 -->
+
+    <div class="form-group" ng-repeat="row in game.board">
+      <div class="cell" ng-repeat="col in row" ng-class="{'col-md-4': row.length == 3, 'col-md-3': row.length == 4}">
+        <div flippable="" flipped="col.flipped" class="col-md-12 card" style="height: 200px;">
+          <div flippable-front="" class="text-center" ng-class="{'owned X': col.owner == 'X', 'owned O': col.owner == 'O'}">
+            <div ng-if="col.owner != null" style="font-size: 130px;">
+              {{col.owner}}
+            </div>
+            <div ng-if="col.owner == null" ng-click="flipCard(col)" style="width: 100%; height: 100%;">
+              <i class="fa fa-question fa-5x" style="margin-top: 1em;"></i>
+              <!-- img src="/images/face.png" width="100%" -->
+            </div>
+          </div>
+          <div flippable-back="" ng-class="ui.type">
+            <div class="float-bottom">
+              <span ng-if="xTurn">X's Turn</span>
+              <span ng-if="!xTurn">O's Turn</span>
+            </div>
+            <div class="text-center" ng-class="[ui.size, ui.style]">{{col.word}}</div>
+            <div class="float-bottom-left">
+              <button class="btn btn-default btn-lg" ng-click="correct(col)"><i class="fa fa-check"></i></button>
+            </div>
+            <div class="float-bottom-right">
+              <button class="btn btn-default btn-lg" ng-click="steal(col)"><i class="fa fa-gift"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

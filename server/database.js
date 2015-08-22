@@ -12,7 +12,7 @@ var defer = Q.nfcall(MongoClient.connect, Config.mongo).then(function(mongodb) {
   var collection = mongodb.collection('word');
   _.forEach(Config.initWords, function(words, key) {
     _.forEach(words, function(word) {
-      collection.update({_id: word}, {_id: word, labels: [key]}, {upsert: true}, function(error, response) {
+      collection.update({_id: word}, {$addToSet: {labels: key}}, {upsert: true}, function(error, response) {
         if (error) {
           console.error("Unable to add word", word, error);
         } else if (response.result.upserted) {

@@ -74,8 +74,8 @@
     color: lighten(spin(@color, 10), 50%);
   }
   .tileSize(@size) {
-    font-size: (5em + @size);
-    padding-top: (35px - @size * 2);
+    font-size: (4em + @size);
+    //padding-top: (35px - @size * 2);
   }
 }
 
@@ -91,9 +91,9 @@
   position: absolute;
 }
 
-.float-top {
+.float-bottom {
   color: #fff;
-  top: @padding-base-vertical;
+  bottom: @padding-base-vertical;
   text-align: center;
   position: absolute;
   width: 100%;

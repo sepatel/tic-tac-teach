@@ -15,7 +15,7 @@ module.exports = {
     var game = {
       _id: Utils.uuid(),
       players: {X: data.xPlayer, O: data.oPlayer},
-      rules: { capture: 3, size: 3, type: data.type || 'word' },
+      rules: { capture: 4, size: 4, type: data.type || 'word' },
       board: []
     };
 

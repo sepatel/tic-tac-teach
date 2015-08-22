@@ -12,6 +12,9 @@ module.exports = {
     dolch2: ['all', 'am', 'are', 'at', 'ate', 'be', 'black', 'brown', 'but', 'came', 'did', 'do', 'eat', 'four', 'get',
       'good', 'have', 'he', 'into', 'like', 'must', 'new', 'no', 'now', 'on', 'our', 'out', 'please', 'pretty', 'ran',
       'ride', 'saw', 'say', 'she', 'so', 'soon', 'that', 'there', 'they', 'this', 'too', 'under', 'want', 'was', 'well',
-      'went', 'what', 'white', 'who', 'will', 'with', 'yes']
+      'went', 'what', 'white', 'who', 'will', 'with', 'yes'],
+    q1sight: ['I', 'my', 'and', 'is', 'two', 'blue', 'one', 'yellow', 'four', 'purple', 'five', 'black', 'eight',
+      'pink', 'can', 'like', 'a', 'the', 'big', 'red', 'up', 'green', 'three', 'orange', 'six', 'brown', 'seven',
+      'white', 'nine', 'ten', 'see']
   }
 };

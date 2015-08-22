@@ -3,7 +3,7 @@
 
   module.config(function($routeProvider) {
     $routeProvider.when('/newGame', {controller: 'NewGameCtrl', templateUrl: 'app/new-game.html'});
-    $routeProvider.when('/game/:gameId', {controller: 'PlayGameCtrl', templateUrl: 'app/play-game.html'});
+    $routeProvider.when('/game/:gameId', {controller: 'PlayGameCtrl', templateUrl: 'app/tic-tac-game.html'});
     $routeProvider.when('/theme', {controller: 'ThemeCtrl', templateUrl: 'app/theme.html'});
     $routeProvider.otherwise({redirectTo: '/'});
   });
