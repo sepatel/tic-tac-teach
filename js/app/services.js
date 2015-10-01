@@ -1,46 +1,5 @@
-(function(annyang) {
-  'use strict';
-
-}(window.annyang));
-
-(function(angular, annyang) {
+(function(angular) {
   var module = angular.module('app.services', ['ssNotify', 'ngWebsocket']);
-
-  module.service('AnnyangService', function AnnyangService($rootScope) {
-    var service = {};
-
-    // COMMANDS
-    service.commands = {};
-
-    service.addCommand = function(phrase, callback) {
-      var command = {};
-
-      // Wrap annyang command in scope apply
-      command[phrase] = function(args) {
-        $rootScope.$apply(callback(args));
-      };
-
-      // Extend our commands list
-      angular.extend(service.commands, command);
-
-      // Add the commands to annyang
-      annyang.addCommands(service.commands);
-      console.debug('added command "' + phrase + '"', service.commands);
-    };
-
-    service.removeCommand = function(phrase) {
-      delete service.commands[phrase];
-      annyang.removeCommands(phrase);
-    };
-
-    service.start = function() {
-      annyang.addCommands(service.commands);
-      annyang.debug(true);
-      annyang.start();
-    };
-
-    return service;
-  });
 
   module.service('TTTService', function($http, $interval, $q, $websocket, NotifyService) {
     function successHandler(result) {
@@ -49,6 +8,7 @@
 
     function errorHandler(response) {
       console.error("Something broke", response);
+      NotifyService.danger("Error", JSON.stringify(response));
     }
 
     function $delete(url) {
@@ -74,17 +34,11 @@
     });
     console.info("WebService", ws);
 
-    var gamesList = [];
     ws.$on('allGames', function(payload) {
       console.info("All Games Info received", typeof payload, payload);
-      gamesList.length = 0;
-      angular.forEach(payload, function(item) {
-        gamesList.push(item);
-      });
     });
     ws.$on('$message', function(data, flags) {
       console.info("Data", data, "Flags", flags);
-      //NotifyService.info('Message', "Data: " + JSON.stringify(data) + "\nFlags: " + flags);
     });
     ws.$on('$open', function() {
       NotifyService.info('Server Connection', "The server connection has opened.", 2);
@@ -92,45 +46,61 @@
     ws.$on('$close', function() {
       NotifyService.info('Server Error', "The server connection has closed. Auto retrying.", 2);
     });
+
+    var playerMap;
     var me = {
       sendMessage: function(event, data) {
         // TODO: Strip out all of the $$hashKey and other angular internals
         return ws.$emit(event, data);
       },
+      deleteGame: function(gameId) {
+        return $delete('/game/' + gameId);
+      },
       getAllGames: function() {
-        var defer = $q.defer();
-
-        var stop = $interval(function() {
-          if (gamesList.length) {
-            $interval.cancel(stop);
-            return defer.resolve(gamesList);
-          }
-        }, 1000);
-
-        return defer.promise;
+        return $get('/games');
       },
       getGame: function(gameId) {
-        var defer = $q.defer();
-        me.getAllGames().then(function(games) {
-          angular.forEach(games, function(game) {
-            if (game._id == gameId) {
-              defer.resolve(game);
-            }
-          });
-        });
-        return defer.promise;
+        return $get('/game/' + gameId);
       },
       newGame: function(options) {
         console.info("Creating new game with ", options);
-        // TODO: Determine the players to play in the new game plus other options (rules, category, type, size, ...)
         return $post('/game', options).then(function(game) {
           NotifyService.success("New Game", "New game has been started, have fun");
-          gamesList.push(game);
+          console.info("New game created", game);
           return game;
+        });
+      },
+      getPlayer: function(playerId) {
+        return $get('/player/' + playerId);
+      },
+      getPlayers: function() {
+        if (playerMap) {
+          return $q.when(playerMap);
+        }
+
+        return $get('/players').then(function(players) {
+          playerMap = {};
+          angular.forEach(players, function(player) {
+            playerMap[player._id] = player;
+          });
+          return playerMap;
+        });
+      },
+
+      // payload = {gameId: 1234, correct: true, row: number, col: number, player: <playerId>, type: word, word: string, score: 0.81}
+      submitTurn: function(playerId, gameId, score, row, col, question) {
+        me.sendMessage("submitTurn", {
+          player: playerId,
+          gameId: gameId,
+          correct: score > 0,
+          row: row,
+          col: col,
+          question: question,
+          score: score
         });
       }
     };
 
     return me;
   });
-}(angular, window.annyang));
+}(angular));

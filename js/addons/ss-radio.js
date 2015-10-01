@@ -6,7 +6,7 @@
       restrict: 'A',
       transclude: true,
       scope: {
-        model: '=',
+        model: '=ngModel',
         value: '=',
         onClick: '&'
       },

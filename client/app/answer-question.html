@@ -1,0 +1,12 @@
+<div class="panel panel-default answerQuestion">
+  <div class="panel-heading">
+    <h2 class="panel-title"><img ng-src="{{player.avatar}}"> {{player.name}}</h2>
+  </div>
+  <div class="panel-body">
+    <div class="instruction">{{question.instruction}}</div>
+    <div class="ask text">{{question.ask.text}}</div>
+  </div>
+  <div class="panel-footer text-center">
+    <button class="btn btn-success btn-sm" ng-click="correct()"><i class="fa fa-check"></i> Correct</button>
+  </div>
+</div>

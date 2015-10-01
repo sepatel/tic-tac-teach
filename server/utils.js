@@ -6,6 +6,13 @@ Database.then(function(db) {
 });
 
 module.exports = {
+  objectId: function(string) {
+    try {
+      return new ObjectID(string);
+    } catch (e) { // not a valid objectid format so fallback to string literal
+      return string;
+    }
+  },
   uuid: function() {
     return new ObjectID();
   },

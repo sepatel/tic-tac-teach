@@ -1,61 +1,65 @@
-var Q = require('q');
-var Utils = require('./utils');
-var Database = require('./database');
+var Services = require('./services');
 
-var mongodb;
-Database.then(function(db) {
-  console.info("Webapi DB %s is ready ", db.s.databaseName);
-  mongodb = db;
-});
+module.exports = function(express) {
+  var router = express.Router();
 
-module.exports = {
-  newGame: function(data) {
-    var defer = Q.defer();
-    console.info("New Game Request", data);
-    var game = {
-      _id: Utils.uuid(),
-      players: {X: data.xPlayer, O: data.oPlayer},
-      rules: { capture: 4, size: 4, type: data.type || 'word' },
-      board: []
-    };
+  router.get('/games', function(req, res) {
+    Services.getActiveGames().then(function(games) {
+      res.send(games);
+    }).catch(errorHandler(res));
+  });
 
-    mongodb.collection('word').find({labels: data.category}).toArray(function(err, docs) {
-      if (err) {
-        return defer.reject(err);
-      }
+  // POST /game {players: [{id: playerId, level: <label(s)>}]}
+  router.post('/game', function(req, res) {
+    Services.newGame(req.body).then(function(game) {
+      res.send(game);
+    }).catch(errorHandler(res));
+  });
 
-      for (var row = 0; row < game.rules.size; row++) {
-        var boardRow = [];
-        for (var col = 0; col < game.rules.size; col++) {
-          var index = Utils.randomInt(0, docs.length);
-          boardRow.push({word: docs[index]._id});
-          docs.splice(index, 1);
-        }
-        game.board.push(boardRow);
-      }
+  // GET /game/1234
+  router.get('/game/:gameId', function(req, res) {
+    var gameId = req.params.gameId;
+    Services.getGame(gameId).then(function(game) {
+      res.send(game);
+    }).catch(errorHandler(res));
+  });
 
-      return defer.resolve(game);
-      /*
-      mongodb.collection('game').insert(game, function(error, document) {
-        if (error) {
-          return defer.reject(error);
-        }
-        console.info("Creating New Game", JSON.stringify(game));
-        return defer.resolve(game);
-      });
-      */
-    });
-    return defer.promise;
-  },
-  getAllGames: function() {
-    var defer = Q.defer();
-    mongodb.collection('game').find({winner: null}).toArray(function(error, docs) {
-      if (error) {
-        return defer.reject(error);
-      }
-      return defer.resolve(docs);
-    });
-    return defer.promise;
-  }
+  // DELETE /game/1234
+  router.delete('/game/:gameId', function(req, res) {
+    var gameId = req.params.gameId;
+    Services.deleteGame(gameId).then(function(result) {
+      console.info("Deleted game %s with result", gameId, result.result);
+      res.send((result.result.n > 0));
+    }).catch(errorHandler(res));
+  });
+
+  // GET /game/1234/player/abc
+  // Return the words this player should be focusing on
+  router.get('/game/:gameId/player/:playerId', function(req, res) {
+    var gameId = req.params.gameId;
+    var playerId = req.params.playerId;
+  });
+
+  // GET /players
+  router.get('/players', function(req, res) {
+    Services.getPlayers().then(function(players) {
+      res.send(players);
+    }).catch(errorHandler(res));
+  });
+
+  // GET /player/apple
+  router.get('/player/:playerId', function(req, res) {
+    Services.getPlayer(req.params.playerId).then(function(player) {
+      res.send(player);
+    }).catch(errorHandler(res));
+  });
+
+  return router;
 };
 
+function errorHandler(res) {
+  return function(error) {
+    res.status(500);
+    res.send({error: error});
+  }
+}

@@ -1,23 +1,90 @@
 <div class="container">
-  <div class="form-group">
-    <h2>Create New Game</h2>
+  <div class="form-group text-center">
+    <h2>Tic-Tac-Teach</h2>
   </div>
-  <div class="form-group">
-    <div class="input-group">
-      <span class="input-group-addon">Player X</span>
-      <select class="form-control" ng-model="form.xPlayer" ng-options="user.value as user.label for user in users"></select>
+  <div class="col-md-12">
+    <div class="panel panel-secondary newGame">
+      <div class="panel-heading">
+        <h2 class="panel-title">New Game</h2>
+      </div>
+      <div class="panel-body text-center">
+        <div class="form-group clearfix">
+          <div flippable="" flipped="player.flipped"
+              class="playerCardSpace col-md-3 col-sm-6" ng-repeat="(id, player) in players"
+              ng-mouseover="player.flipped = true" ng-mouseleave="player.flipped = false">
+            <div flippable-front="" class="playerCard">
+              <div class="playerPortrait"><img ng-src="{{player.avatar}}"></div>
+              <div class="playerName"><strong>{{player.name}}</strong></div>
+              <div ng-if="player.active" class="active"><i class="fa fa-check text-success"></i></div>
+            </div>
+
+            <div flippable-back="" class="playerCard">
+              <div class="playerConfig">
+                <div class="playerName"><strong>{{player.name}}</strong></div>
+                <!-- div class="form-group">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-addon">Level</div>
+                    <select class="form-control" ng-model="player.level" required="required"
+                        ng-options="label.id as label.name for label in labels"></select>
+                  </div>
+                </div -->
+                <div class="form-group">
+                  <button class="btn btn-sm"
+                      ng-class="{'btn-primary': !player.active, 'btn-warning': player.active}"
+                      ng-click="toggleJoin(player)">
+                    <span ng-if="player.active">Remove</span>
+                    <span ng-if="!player.active">Join Game</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Size</label>
+
+          <div class="btn-group">
+            <button btn-radio="3" class="btn btn-default" ng-model="newGameForm.size">3 x 3</button>
+            <button btn-radio="4" class="btn btn-default" ng-model="newGameForm.size">4 x 4</button>
+            <button btn-radio="5" class="btn btn-default" ng-model="newGameForm.size">5 x 5</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group clearfix text-center">
+        <button type="submit" class="btn btn-primary" ng-class="{disabled: !newGameForm.players.length}" ng-click="createGame()">
+          <i class="fa fa-gamepad"></i> Play {{newGameForm.size}} x {{newGameForm.size}}
+        </button>
+      </div>
     </div>
   </div>
-  <div class="form-group text-center">
-    <small class="text-muted">vs.</small>
-  </div>
-  <div class="form-group">
-    <div class="input-group">
-      <span class="input-group-addon">Player O</span>
-      <select class="form-control" ng-model="form.oPlayer" ng-options="user.value as user.label for user in users"></select>
+
+  <div class="col-md-12" ng-if="games.length">
+    <div class="panel panel-default newGame">
+      <div class="panel-heading">
+        <h2 class="panel-title">Resume Games</h2>
+      </div>
+      <div class="panel-body">
+        <div class="form-group clearfix">
+          <div class="playerCardSpace col-md-3 col-sm-6" ng-repeat="game in games"
+              ng-mouseover="game.flipped = true" ng-mouseleave="game.flipped = false">
+            <div class="deleteCard" ng-click="deleteGame(game)"><i class="fa fa-times"></i></div>
+            <div class="playerCard resume" style="cursor: pointer;" ng-click="resumeGame(game)">
+              <!-- div class="playerName">
+                <strong>{{game.rules.type}} Game ({{game.rules.size}} x {{game.rules.size}})</strong>
+              </div -->
+              <div class="text-muted float-bottom" style="width: 80%; bottom: 12px;">
+                <small>{{game.created}}</small>
+              </div>
+              <div class="form-group text-center" style="margin-top: 20px;">
+                <span ng-repeat="player in game.players">
+                  <img ng-src="{{players[player.id].avatar}}" style="height: 45px;">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="form-group text-center">
-    <button type="submit" class="btn btn-primary" ng-click="createGame()">Create Game</button>
   </div>
 </div>
+

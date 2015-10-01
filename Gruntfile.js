@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           'bower_components/jquery/dist/jquery.js', 'bower_components/angular/angular.js',
           'bower_components/angular-animate/angular-animate.js', 'bower_components/angular-route/angular-route.js',
           'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js',
-          'bower_components/ng-websocket/ng-websocket.js', 'bower_components/annyang/annyang.js'
+          'bower_components/ng-websocket/ng-websocket.js'
         ],
         dest: 'client/js/vendor.js'
       }
