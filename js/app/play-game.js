@@ -79,6 +79,7 @@
   module.controller('AnswerQuestionCtrl', function($scope, $modalInstance, $interval, player, question) {
     $scope.player = player;
     $scope.question = question;
+    $scope.style = "color" + Math.ceil(Math.random() * 5) + " size" + Math.ceil(Math.random() * 5) + " font" + Math.ceil(Math.random() * 5);
 
     console.info("Question", question);
     $scope.timeToLive = {

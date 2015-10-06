@@ -22,9 +22,9 @@ module.exports = {
 
     var wordLists = [];
     _.forEach(data.players || [], function(player) {
-      var player = {id: player.id, level: player.level};
+      var player = {id: player.id, level: player.level}
       game.players.push(player);
-      wordLists.push(generatePlayerQuestions(player.id, player.level).then(function(questions) {
+      wordLists.push(generatePlayerQuestions(player.id).then(function(questions) {
         player.questions = questions;
         return player;
       }));
@@ -121,16 +121,17 @@ function qFind(collectionName, query, fields, options) {
   return defer.promise;
 }
 
-function generatePlayerQuestions(playerId, label) {
+function generatePlayerQuestions(playerId) {
   var defer = Q.defer();
+  var player = Config.players[playerId];
 
   // TODO: Factor in the weighted averages of the score
   var questions = [];
 
-  return qFind('questions', {labels: {$in: label}}, {labels: 0}).then(function(questions) {
+  return qFind('questions', {labels: {$in: player.level}}, {labels: 0}).then(function(questions) {
     var toAsk = [];
 
-    while (toAsk.length < 10 && questions.length) {
+    while (toAsk.length < player.variance && questions.length) {
       toAsk.push(questions[Math.floor(Math.random() * questions.length)]);
     }
 

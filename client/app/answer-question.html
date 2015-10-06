@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <div class="instruction">{{question.instruction}}</div>
-    <div class="ask text">{{question.ask.text}}</div>
+    <div class="ask text" ng-class="style">{{question.ask.text}}</div>
   </div>
   <div class="panel-footer text-center">
     <button ng-if="player.clock" ng-click="correct()"

@@ -32,13 +32,13 @@ module.exports = {
       'white', 'nine', 'ten', 'see']
   },
   players: {
-    moksh: { name: 'Moksh Patel', level: ['dolch1', 'color', 'dolch2', 'dolch3'], clock: 10, block: 0,
+    moksh: { name: 'Moksh Patel', level: ['dolch1', 'color', 'dolch2', 'dolch3'], clock: 10, block: 0, variance: 10,
       avatar: 'http://icons.iconarchive.com/icons/fasticon/cute-monsters/256/red-monster-happy-icon.png' },
-    saarth: { name: 'Saarth Patel', level: ['cvc'], clock: 12, block: 0,
+    saarth: { name: 'Saarth Patel', level: ['cvc'], clock: 12, block: 0, variance: 3,
       avatar: 'http://www.icon100.com/up/367/128/boy.png' },
-    mital: { name: 'Mital Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5,
+    mital: { name: 'Mital Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5, variance: 10,
       avatar: 'http://icons.iconarchive.com/icons/icons-land/vista-people/256/Office-Client-Female-Light-icon.png' },
-    sejal: { name: 'Sejal Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5,
+    sejal: { name: 'Sejal Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5, variance: 10,
       avatar: 'http://iconshow.me/media/images/ui/ios7-icons/png/512/contact-outline.png' }
   }
 };
