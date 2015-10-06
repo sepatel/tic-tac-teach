@@ -5,8 +5,9 @@ module.exports = {
     letter: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
       'V', 'W', 'X', 'Y', 'Z' ],
     cvc: ['at', 'bat', 'cat', 'fat', 'hat', 'mat', 'nat', 'pat', 'rat', 'sat', 'cap', 'gap', 'hap', 'lap', 'map', 'nap',
-      'pap', 'rap', 'sap', 'tap', 'yap', 'zap', 'bog', 'cog', 'dog', 'fog', 'hog', 'jog', 'log',
-      'bar', 'star', 'car', 'far', 'jar', 'par', 'tar'],
+      'pap', 'rap', 'sap', 'tap', 'yap', 'zap', 'bog', 'cog', 'dog', 'fog', 'hog', 'jog', 'log', 'bam', 'dam', 'ham',
+      'jam', 'mam', 'ram', 'sam', 'yam', 'ban', 'can', 'dan', 'fan', 'man', 'pan', 'ran', 'tan', 'van'],
+    cvc2: [ 'bar', 'star', 'car', 'far', 'jar', 'par', 'tar'],
     dolch1: ['and', 'away', 'big', 'blue', 'can', 'come', 'down', 'find', 'for', 'funny', 'go', 'help', 'here', 'in',
       'is', 'it', 'jump', 'little', 'look', 'make', 'me', 'my', 'not', 'one', 'play', 'red', 'run', 'said', 'see',
       'the', 'three', 'to', 'two', 'up', 'we', 'where', 'yellow', 'you'],
@@ -31,13 +32,13 @@ module.exports = {
       'white', 'nine', 'ten', 'see']
   },
   players: {
-    moksh: { name: 'Moksh Patel', level: ['dolch1', 'color', 'dolch2', 'dolch3'], clock: 10,
+    moksh: { name: 'Moksh Patel', level: ['dolch1', 'color', 'dolch2', 'dolch3'], clock: 10, block: 0,
       avatar: 'http://icons.iconarchive.com/icons/fasticon/cute-monsters/256/red-monster-happy-icon.png' },
-    saarth: { name: 'Saarth Patel', level: ['cvc'], clock: 12,
+    saarth: { name: 'Saarth Patel', level: ['cvc'], clock: 12, block: 0,
       avatar: 'http://www.icon100.com/up/367/128/boy.png' },
-    mital: { name: 'Mital Patel', level: ['dolch4', 'dolch5'], clock: 5,
+    mital: { name: 'Mital Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5,
       avatar: 'http://icons.iconarchive.com/icons/icons-land/vista-people/256/Office-Client-Female-Light-icon.png' },
-    sejal: { name: 'Sejal Patel', level: ['dolch4', 'dolch5'], clock: 5,
+    sejal: { name: 'Sejal Patel', level: ['dolch4', 'dolch5'], clock: 5, block: 5,
       avatar: 'http://iconshow.me/media/images/ui/ios7-icons/png/512/contact-outline.png' }
   }
 };

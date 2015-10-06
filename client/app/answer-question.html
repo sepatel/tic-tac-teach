@@ -7,6 +7,13 @@
     <div class="ask text">{{question.ask.text}}</div>
   </div>
   <div class="panel-footer text-center">
-    <button class="btn btn-success btn-sm" ng-click="correct()"><i class="fa fa-check"></i> Correct</button>
+    <button ng-if="player.clock" ng-click="correct()"
+        class="btn btn-success btn-sm" ng-class="{disabled: timeToLive.block > 0}">
+      <i class="fa fa-check"></i> Correct <span class="clock">{{timeToLive.correct}}</span>
+    </button>
+    <button ng-if="player.block" ng-click="block()"
+        class="btn btn-warning btn-sm" ng-class="{disabled: timeToLive.block == 0}">
+      <i class="fa fa-ban"></i> Block <span class="clock">{{timeToLive.block}}</span>
+    </button>
   </div>
 </div>

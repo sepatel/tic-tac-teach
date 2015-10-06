@@ -77,6 +77,14 @@ module.exports = {
 
   // payload = {gameId: 1234, correct: true, row: number, col: number, player: <playerId>, question: string, score: 0.81}
   submitTurn: function(payload) {
+    if (payload.score == null) {
+      return Q.ninvoke(mongodb.collection('game'), "update", {
+        _id: Utils.objectId(payload.gameId)
+      }, {$set: {
+        lastTurn: payload.player
+      }});
+    }
+
     var questionUpdate = {};
     questionUpdate[payload.word] = {$inc: {score: payload.score || 0, attempts: 1}};
     var promise = Q.ninvoke(mongodb.collection('playerStats'), "update", {
@@ -94,7 +102,7 @@ module.exports = {
     console.info("Submitted Turn", payload);
     if (payload.correct) {
       var key = "board." + payload.row + "." + payload.col;
-      var update = { lastTurn: payload.playerId };
+      var update = { lastTurn: payload.player };
       update[key] = payload.player;
       Q.ninvoke(mongodb.collection('game'), "update", {_id: Utils.objectId(payload.gameId)}, {$set: update});
     }

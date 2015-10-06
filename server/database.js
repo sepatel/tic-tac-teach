@@ -10,22 +10,6 @@ var defer = Q.nfcall(MongoClient.connect, Config.mongo).then(function(mongodb) {
 }).then(function(mongodb) {
   // Initialize Questions
   var collection = mongodb.collection('questions');
-
-  /*
-  var collection = mongodb.collection('word');
-  _.forEach(Config.sightWords, function(words, key) {
-    _.forEach(words, function(word) {
-      collection.update({_id: word}, {$addToSet: {labels: key}}, {upsert: true}, function(error, response) {
-        if (error) {
-          console.error("Unable to add word", word, error);
-        } else if (response.result.upserted) {
-          console.info("Injected word", word);
-        }
-      });
-    });
-  });
-  */
-
   _.forEach(Config.sightWords, function(words, key) {
     _.forEach(words, function(word) {
       collection.update({
@@ -34,7 +18,8 @@ var defer = Q.nfcall(MongoClient.connect, Config.mongo).then(function(mongodb) {
       }, {
         $set: {
           instruction: "Say the word",
-          ask: {text: word}
+          ask: {text: word},
+          clock: 1
         },
         $addToSet: {labels: key}
       }, {upsert: true}, function(error, response) {

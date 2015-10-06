@@ -87,7 +87,6 @@
         });
       },
 
-      // payload = {gameId: 1234, correct: true, row: number, col: number, player: <playerId>, type: word, word: string, score: 0.81}
       submitTurn: function(playerId, gameId, score, row, col, question) {
         me.sendMessage("submitTurn", {
           player: playerId,
