@@ -1,6 +1,33 @@
 (function(angular) {
   var module = angular.module('app.services', ['ssNotify', 'ngWebsocket']);
 
+  module.factory('TTS', function($q) {
+    return function(text) {
+      var defer = $q.defer();
+
+      var SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance || window.mozSpeechSynthesisUtterance || window.msSpeechSynthesisUtterance || window.oSpeechSynthesisUtterance || window.SpeechSynthesisUtterance;
+      if (SpeechSynthesisUtterance === undefined) {
+        return defer.reject("Speech not supported!");
+      }
+
+      var u = new SpeechSynthesisUtterance();
+      u.text = text;
+      u.lang = 'en-US';
+
+      u.onend = function() {
+        return defer.resolve();
+      };
+
+      u.onerror = function(e) {
+        return defer.reject(e);
+      };
+
+      speechSynthesis.speak(u);
+
+      return defer.promise;
+    };
+  });
+
   module.service('TTTService', function($http, $interval, $q, $websocket, NotifyService) {
     function successHandler(result) {
       return result.data;
