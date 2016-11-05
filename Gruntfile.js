@@ -1,159 +1,51 @@
 module.exports = function(grunt) {
   'use strict';
-
-  // Force use of Unix newlines
-  grunt.util.linefeed = '\n';
+  grunt.util.linefeed = '\n'; // Force use of Unix newlines
 
   RegExp.quote = function(string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
   };
 
-  var fs = require('fs');
-  var path = require('path');
-
   grunt.initConfig({
-    // Metadata.
     pkg: grunt.file.readJSON('package.json'),
-
-    // Task configuration.
     clean: {
-      dist: ['client/css', 'client/js']
+      dist: ['src/main/resources/ui/js/*.js', 'src/main/resources/ui/css/*.css']
     },
-
     concat: {
-      sliqsolv: {
-        src: [ 'js/addons/**/*.js' ],
-        dest: 'client/js/sliqsolv-seed.js'
-      },
       app: {
-        src: [ 'js/app/**/*.js' ],
-        dest: 'client/js/app.js'
+        src: ['src/main/angularjs/**/*.js'],
+        dest: 'src/main/resources/ui/js/app.js'
       },
       vendor: {
-        src: [
-          'bower_components/jquery/dist/jquery.js', 'bower_components/angular/angular.js',
-          'bower_components/angular-animate/angular-animate.js', 'bower_components/angular-route/angular-route.js',
-          'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js',
-          'bower_components/ng-websocket/ng-websocket.js'
-        ],
-        dest: 'client/js/vendor.js'
-      }
-    },
-
-    uglify: {
-      options: {
-        preserveComments: 'some'
-      },
-      vendor: {
-        src: [
-          'bower_components/jquery/dist/jquery.js', 'bower_components/angular/angular.js',
-          'bower_components/angular-animate/angular-animate.js', 'bower_components/angular-route/angular-route.js',
-          'bower_components/ui-utils/ui-utils.js', 'vendor/ui-bootstrap-tpls-0.12.0.js',
-          'bower_components/ng-websocket/ng-websocket.js', 'bower_components/annyang/annyang.js'
-        ],
-        dest: 'client/js/vendor.min.js'
+        src: ['node_modules/angular/angular.min.js', 'node_modules/angular-animate/angular-animate.min.js',
+          'node_modules/angular-aria/angular-aria.min.js', 'node_modules/angular-messages/angular-messages.min.js',
+          'node_modules/angular-route/angular-route.min.js', 'node_modules/angular-material/angular-material.min.js'],
+        dest: 'src/main/resources/ui/js/vendor.js'
       }
     },
     less: {
-      compileCore: {
-        options: {
-          strictMath: true
-        },
-        src: ['less/bootstrap.less', 'less/addons/sliqsolv.less', 'less/app/app.less'],
-        dest: 'client/css/<%= pkg.name %>.css'
-      }
-    },
-
-    autoprefixer: {
-      core: {
-        options: {
-          map: false
-        },
-        src: 'client/css/<%= pkg.name %>.css'
-      }
-    },
-
-    csslint: {
-      options: {
-        csslintrc: 'less/.csslintrc'
+      compileApp: {
+        options: {strictMath: true, sourceMap: false, outputSourceFiles: true},
+        files: {
+          'src/main/resources/ui/css/app.css': ['src/main/less/app.less']
+        }
       },
-      dist: 'client/css/<%= pkg.name %>.css'
-    },
-
-    cssmin: {
-      options: {
-        compatibility: 'ie8',
-        keepSpecialComments: '*',
-        noAdvanced: true
-      },
-      minifyCore: {
-        src: 'client/css/<%= pkg.name %>.css',
-        dest: 'client/css/<%= pkg.name %>.min.css'
+      compileVendor: {
+        options: {strictMath: true, sourceMap: false, outputSourceFiles: true},
+        files: {
+          'src/main/resources/ui/css/vendor.css': ['node_modules/angular-material/angular-material.min.css']
+        }
       }
     },
-
-    csscomb: {
-      options: {
-        config: 'less/.csscomb.json'
-      },
-      dist: {
-        expand: true,
-        cwd: 'client/css/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'client/css/'
-      }
-    },
-
-    copy: {
-      css: { /* src: 'css/*', dest: 'dist/' */ },
-      js: { /* src: 'js/*', dest: 'dist/' */ },
-      html: { /* expand: true, cwd: 'client/', src: '** /*.html', dest: 'dist/' */ },
-      fonts: { /* src: 'fonts/*', dest: 'dist/' */ }
-    },
-
     watch: {
-      src: {
-        files: 'js/**/*.js',
-        tasks: ['concat']
-      },
-      /* html: { files: 'client/** /*.html', tasks: 'copy:html' }, */
-      less: {
-        files: 'less/**/*.less',
-        tasks: 'dist-css'
-      }
-    },
-
-    sed: {
-      versionNumber: {
-        pattern: (function() {
-          var old = grunt.option('oldver');
-          return old ? RegExp.quote(old) : old;
-        })(),
-        replacement: grunt.option('newver'),
-        recursive: true
-      }
-    },
-    exec: {
-      npmUpdate: {
-        command: 'npm update'
-      }
+      app: {files: ['src/main/angularjs/**/*.js'], tasks: ['concat:app']},
+      lessApp: {files: ['src/main/less/**/*.less'], tasks: ['less:compileApp']},
+      vendor: {files: ['node_modules'], tasks: ['concat:vendor', 'less:compileVendor']}
     }
   });
 
-  // These plugins provide necessary tasks.
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
-  // JS distribution task.
-  grunt.registerTask('dist-js', ['concat', 'uglify']);
-
-  // CSS distribution task.
-  grunt.registerTask('less-compile', ['less:compileCore']);
-  grunt.registerTask('dist-css', ['less-compile', 'autoprefixer:core', 'csscomb:dist', 'cssmin:minifyCore']);
-
-  // Full distribution task.
-  grunt.registerTask('dist', ['clean:dist', 'dist-css', 'dist-js']);
-
-  // Default task.
-  grunt.registerTask('default', ['clean:dist', 'dist']);
+  grunt.registerTask('build', ['clean', 'concat', 'less'])
 };

@@ -36,3 +36,16 @@ bower_components
 client/css
 client/js
 server/cache/*.html
+
+# Gradle Tweaks
+.gradle
+.idea
+build
+*.swp
+*.iml
+logs
+**/*.log
+node_modules
+webapp/src/main/resources/**/*.css
+webapp/src/main/resources/**/*.js
+
