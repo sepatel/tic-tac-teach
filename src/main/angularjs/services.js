@@ -1,5 +1,5 @@
 (function(angular) {
-  var module = angular.module('app.services', ['ssNotify', 'ngWebsocket']);
+  var module = angular.module('app.services', []);
 
   module.factory('TTS', function($q) {
     return function(text) {
@@ -28,14 +28,14 @@
     };
   });
 
-  module.service('TTTService', function($http, $interval, $q, $websocket, NotifyService) {
+  module.service('TTTService', function($http, $interval, $q, $mdToast) {
     function successHandler(result) {
       return result.data;
     }
 
     function errorHandler(response) {
       console.error("Something broke", response);
-      NotifyService.danger("Error", JSON.stringify(response));
+      $mdToast.show($mdToast.simple().textContent(JSON.stringify(response)).hideDelay(10000));
     }
 
     function $delete(url) {
@@ -54,6 +54,7 @@
       return $http.put(url, data).then(successHandler, errorHandler);
     }
 
+    /*
     var ws = $websocket.$new({
       url: 'ws://localhost:3000',
       reconnect: true,
@@ -68,11 +69,12 @@
       console.info("Data", data, "Flags", flags);
     });
     ws.$on('$open', function() {
-      NotifyService.info('Server Connection', "The server connection has opened.", 2);
+      $mdToast.show($mdToast.simple().textContent("The server connection has opened."));
     });
     ws.$on('$close', function() {
-      NotifyService.info('Server Error', "The server connection has closed. Auto retrying.", 2);
+      $mdToast.show($mdToast.simple().textContent("The server connection has closed. Auto retrying."));
     });
+    */
 
     var playerMap;
     var me = {
@@ -92,7 +94,7 @@
       newGame: function(options) {
         console.info("Creating new game with ", options);
         return $post('/game', options).then(function(game) {
-          NotifyService.success("New Game", "New game has been started, have fun");
+          $mdToast.show($mdToast.simple().textContent("New game has been started, have fun"));
           console.info("New game created", game);
           return game;
         });

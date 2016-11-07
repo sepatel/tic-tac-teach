@@ -1,13 +1,13 @@
 (function(angular) {
   var VERSION_POLLING_FREQUENCY = 1000 * 60 * 15; // 15 minute checks for new release
 
-  var module = angular.module('app.system', ['ssNotify', 'ssStorage']);
+  var module = angular.module('app.system', []);
 
-  module.service('System', function($rootScope, $http, $log, $window, NotifyService, Storage) {
+  module.service('System', function($rootScope, $http, $log, $window, $mdToast) {
     var release = new Date(Storage.get('version') || 0);
     var forcedRefresh = Storage.get('_upgraded') || false;
     if (forcedRefresh) {
-      NotifyService.info("Application Update", "Updates have been made to the application as of " + release.toISOString(), 0);
+      $mdToast.show($mdToast.simple().textContent("Updates have been made to the application as of " + release.toISOString()));
       Storage.remove('_upgraded');
     }
     $rootScope.release = release;

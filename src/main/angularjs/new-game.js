@@ -1,7 +1,7 @@
 (function(angular) {
   var module = angular.module('app.newGame', ['app.services']);
 
-  module.controller('NewGameCtrl', function($scope, $location, NotifyService, TTTService) {
+  module.controller('NewGameCtrl', function($scope, $location, $mdToast, TTTService) {
     $scope.newGameForm = {
       players: [],
       size: 4
@@ -29,7 +29,7 @@
           player.active = true;
           $scope.newGameForm.players.push({id: player._id, level: player.level});
         } else {
-          NotifyService.warning("Too many players", "Please choose a bigger board to allow more players");
+          $mdToast.show($mdToast.simple().textContent("Please choose a bigger board to allow more players"));
         }
       } else {
         player.active = false;

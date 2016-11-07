@@ -2,9 +2,8 @@
   var module = angular.module('app.navigation', ['ngRoute', 'app.services']);
 
   module.config(function($routeProvider) {
-    $routeProvider.when('/', {controller: 'NewGameCtrl', templateUrl: 'app/new-game.html'});
-    $routeProvider.when('/game/:gameId', {controller: 'PlayGameCtrl', templateUrl: 'app/tic-tac-game.html'});
-    $routeProvider.when('/theme', {controller: 'ThemeCtrl', templateUrl: 'app/theme.html'});
+    $routeProvider.when('/', {controller: 'NewGameCtrl', templateUrl: '/new-game.html'});
+    $routeProvider.when('/game/:gameId', {controller: 'PlayGameCtrl', templateUrl: '/tic-tac-game.html'});
     $routeProvider.otherwise({redirectTo: '/'});
   });
 

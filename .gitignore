@@ -46,6 +46,6 @@ build
 logs
 **/*.log
 node_modules
-webapp/src/main/resources/**/*.css
-webapp/src/main/resources/**/*.js
+src/main/resources/**/*.css
+src/main/resources/**/*.js
 
