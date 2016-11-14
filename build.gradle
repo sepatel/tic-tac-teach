@@ -46,8 +46,8 @@ dependencies {
     compile "io.tekniq:tekniq-core:$tekniq_version"
     compile "io.tekniq:tekniq-jdbc:$tekniq_version"
     compile "io.tekniq:tekniq-sparklin:$tekniq_version"
+    compile 'org.hsqldb:hsqldb:2.3.4'
     runtime 'com.hynnet:logback-classic:1.1.3'
-    runtime 'org.hsqldb:hsqldb:2.3.4'
     testCompile 'junit:junit:4.12'
 }
 
