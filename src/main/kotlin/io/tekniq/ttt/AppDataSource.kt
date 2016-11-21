@@ -4,6 +4,7 @@ import io.tekniq.jdbc.TqSingleConnectionDataSource
 import io.tekniq.jdbc.insert
 import io.tekniq.jdbc.selectOne
 import io.tekniq.jdbc.transaction
+import org.slf4j.LoggerFactory
 import java.util.*
 
 object AppDataSource : TqSingleConnectionDataSource(
@@ -11,6 +12,8 @@ object AppDataSource : TqSingleConnectionDataSource(
         AppConfig.get<String>("jdbcUser") ?: "sa",
         AppConfig.get<String>("jdbcPass")
 ) {
+    private val logger = LoggerFactory.getLogger(AppDataSource::class.java)
+
     private val upgrades = listOf(
             "/app/01-schema-init.sql"
     )
@@ -33,19 +36,20 @@ object AppDataSource : TqSingleConnectionDataSource(
                 AppDataSource.javaClass.getResourceAsStream(s).bufferedReader().forEachLine {
                     if (it.matches(".*;\\s*".toRegex())) {
                         buffer.append(it.substring(0, it.lastIndexOf(";")))
-                        println("Invoking SQL: $buffer")
+                        logger.trace("Invoking SQL: $buffer")
                         stmt.execute(buffer.toString())
                         buffer = StringBuilder()
                     } else {
-                        buffer.append(it)
+                        buffer.append(it).append("\n")
                     }
                 }
                 if (buffer.trim().length > 0) {
-                    println("Invoking SQL: $buffer")
+                    logger.trace("Invoking SQL: $buffer")
                     stmt.execute(buffer.toString())
                 }
 
                 insert("INSERT INTO config(version, created) VALUES(?, ?)", i + 1, Date())
+                logger.debug("Upgraded database to version ${i + 1}")
             }
             stmt.close()
 

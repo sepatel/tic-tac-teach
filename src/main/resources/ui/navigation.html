@@ -1,43 +1,7 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavigationCtrl">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" ng-click="isTopExpanded = !isTopExpanded">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href>Tic-Tac-Teach</a>
+<md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar _md _md-toolbar-transitions md-primary md-hue-2">
+  <div class="md-toolbar-tools" layout="row" layout-align="center center">
+    <span class="breadcrumb flat">
+      <a ng-click="breadcrumbs.link($index)" ng-repeat="bc in breadcrumbs" ng-class="{active: $last}">{{bc.label}}</a>
+    </span>
   </div>
-
-  <div class="collapse navbar-collapse" collapse="!isTopExpanded">
-    <ul class="nav navbar-nav">
-      <li class="dropdown navbar-entry" dropdown="">
-        <a href class="dropdown-toggle" dropdown-toggle="">New Game <i class="caret"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href ng-click="createGame('letter')">Letters</a></li>
-          <li><a href ng-click="createGame('cvc')">Simple</a></li>
-          <li><a href ng-click="createGame('dolch1')">Pre-K</a></li>
-          <li><a href ng-click="createGame('q1sight')">Moksh Level 1</a></li>
-          <li><a href ng-click="createGame('dolch2')">Kindegarden</a></li>
-        </ul>
-      </li>
-      <li class="dropdown navbar-entry" dropdown="">
-        <a href class="dropdown-toggle" dropdown-toggle="">Resume Game <i class="caret"></i></a>
-        <ul class="dropdown-menu">
-          <li ng-repeat="game in games">
-            <a href="#/game/{{game._id}}">{{game.players.X || 'Computer'}} vs {{game.players.O || 'Computer'}}</a>
-          </li>
-        </ul>
-      </li>
-      <li><a href="#/theme">View Theme</a></li>
-    </ul>
-    <ul class="nav navbar-nav pull-right">
-      <li class="dropdown navbar-entry" dropdown="">
-        <a href class="dropdown-toggle" dropdown-toggle="">{{activeUser || 'Choose User'}} <i class="caret"></i></a>
-        <ul class="dropdown-menu pull-right">
-          <li><a href ng-click="activeUser='Moksh Patel'">Moksh Patel</a></li>
-          <li><a href ng-click="activeUser='Saarth Patel'">Saarth Patel</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+</md-toolbar>

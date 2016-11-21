@@ -1,0 +1,20 @@
+@primary-color: #3F51B5;
+@accent-color: #FF4081;
+@warn-color: #FF9800;
+
+@import "breadcrumb";
+
+.md-whiteframe {
+  background-color: #ffffff;
+}
+
+md-input-container {
+  .md-errors-spacer {
+    font-size: smaller;
+    color: @warn-color;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

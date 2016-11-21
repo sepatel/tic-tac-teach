@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
     AppDataSource.initSchema()
 
     val staticFiles: SparklinStaticFiles = if (AppConfig.get<String>("DEBUG") == "1") {
-        println("DEBUG mode detected. Live reloading of UI resources")
+        logger.debug("DEBUG mode detected. Live reloading of UI resources")
         SparklinStaticFiles(externalFileLocation = "src/main/resources/ui")
     } else {
         SparklinStaticFiles(fileLocation = "/ui")

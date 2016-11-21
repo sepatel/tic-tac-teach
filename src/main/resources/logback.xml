@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="Root" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%date %-5level [%thread] %-20logger{20} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="MainKt" level="TRACE" />
+  <logger name="io.tekniq" level="TRACE" />
+  <logger name="io.tekniq.ttt.AppDataSource" level="DEBUG" />
+  <root level="WARN">
+    <appender-ref ref="Root" />
+  </root>
+</configuration>

@@ -2,12 +2,13 @@ package io.tekniq.ttt
 
 import io.tekniq.config.TqChainConfig
 import io.tekniq.config.TqEnvConfig
+import io.tekniq.config.TqMapConfig
 import io.tekniq.config.TqPropertiesConfig
 
 object AppConfig : TqChainConfig(
         TqEnvConfig(),
-        TqPropertiesConfig("config.properties", false)
-        /*
+        TqPropertiesConfig("config.properties", false),
+        TqPropertiesConfig("classpath:/config.properties"),
         TqMapConfig(mapOf(
                 "enableDb" to "1",
                 "jdbcDriver" to "org.hsqldb.jdbcDriver",
@@ -16,5 +17,4 @@ object AppConfig : TqChainConfig(
                 "jdbcUser" to "sa",
                 "jdbcPass" to ""
         ))
-        */
 )
